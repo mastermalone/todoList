@@ -1,11 +1,12 @@
 import React from "react";
+import { Field } from "redux-form";
 
 const TodoItem = props => (
   <div>
     {props.items &&
       props.items.map(todo => (
         <div key={todo.id}>
-          <input type="checkbox" />
+          <Field component="input" type="checkbox" name={`check_${todo.id}`} />
           <span>{todo.title}</span>
         </div>
       ))}
