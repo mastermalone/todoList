@@ -4,6 +4,7 @@ const SubmitButton = ({
   name,
   type,
   className,
+  onSubmit,
   label,
   input,
   meta: { touched }
@@ -14,6 +15,7 @@ const SubmitButton = ({
     className={className}
     value={label}
     name={name}
+    onSubmit={onSubmit}
   />
 );
 

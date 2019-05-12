@@ -8,7 +8,7 @@ import {
   fetchTodoList,
   updateTodoList
 } from "../../pages/home/HomeStore";
-const { todos } = HomeDuck.selectors;
+const { todos, newTodo } = HomeDuck.selectors;
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -23,7 +23,8 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = state => {
   return {
-    todoListItems: todos(state) //Selector gets the values provided by fetchTodoList
+    todoListItems: todos(state), //Selector gets the values provided by fetchTodoList
+    newTodo: newTodo(state)
   };
 };
 

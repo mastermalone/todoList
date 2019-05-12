@@ -3,22 +3,29 @@ import TodoItem from "./todoItem/TodoItem";
 import TodoHeader from "./header/Header";
 
 class TodoList extends Component {
-  addTodo = title => {
-    const { updateTodos } = this.props;
-    updateTodos(title);
+  addTodo = (e, title) => {
+    const { newTodo } = this.props;
+
+    e.preventDefault();
+    e.persist();
+    if (newTodo) {
+      const { updateTodos } = this.props;
+      updateTodos(newTodo);
+    }
+    return false;
   };
   componentDidMount() {
     const { getTodos } = this.props;
     getTodos();
-    console.log("THE PROPS", this);
+    console.log("THE PROPS", this.props);
   }
   render() {
     const { todoListItems } = this.props;
-    console.log("todoListItems", todoListItems);
+    const { addTodo } = this;
     return (
       <Fragment>
-        <form name="todo-form">
-          <TodoHeader />
+        <form onSubmit={values => addTodo(values)} name="todo-form">
+          <TodoHeader handleSubmit={addTodo} />
           <TodoItem items={todoListItems} />
         </form>
       </Fragment>

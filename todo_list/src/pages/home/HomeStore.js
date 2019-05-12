@@ -2,6 +2,12 @@ import Duck from "extensible-duck";
 import get from "lodash/get";
 import axios from "axios";
 
+const updateTodos = (state, action) => {
+  const temp = state.todos.map(todo => todo);
+  temp.push(action.payload);
+  return temp;
+};
+
 export const HomeDuck = new Duck({
   namespace: "home-page",
   store: "homeStore",
@@ -17,7 +23,7 @@ export const HomeDuck = new Duck({
       case types.UPDATE_TODO_LIST:
         return {
           ...state,
-          todos: action.payload
+          todos: updateTodos(state, action)
         };
       default:
         return state;
@@ -26,7 +32,8 @@ export const HomeDuck = new Duck({
 
   selectors: {
     root: state => get(state),
-    todos: state => get(state, "homeStore.todos")
+    todos: state => get(state, "homeStore.todos"),
+    newTodo: state => get(state, "form.todo-form.values.enterTodo")
   },
   creators: duck => ({
     getTodos: payload => ({
@@ -34,21 +41,20 @@ export const HomeDuck = new Duck({
       payload
     }),
     updateTodoList: payload => ({
-      type: duck.types.FETCH_TODO_LIST,
+      type: duck.types.UPDATE_TODO_LIST,
       payload
     })
   })
 });
 
 export const fetchTodoList = dispatch => {
-  console.log("DISPATCH", dispatch);
   const url = "https://jsonplaceholder.typicode.com/todos?_limit=10";
   axios({
     url: url,
     method: "get"
   })
     .then(resp => {
-      console.log("This is being called", resp.data);
+      console.log("API Response", resp.data);
       dispatch(HomeDuck.creators.getTodos(resp.data));
     })
     .catch(err => {
@@ -64,6 +70,7 @@ export const updateTodoList = (dispatch, title) => {
     method: "post",
     data: {
       title,
+      id: Math.floor(Math.random() * 1000),
       completed: false
     }
   })
