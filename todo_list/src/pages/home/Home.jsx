@@ -7,9 +7,7 @@ class Home extends Component {
       <Fragment>
         <div className="container">
           <div>HOME PAGE</div>
-          <form>
-            <TodoContainer />
-          </form>
+          <TodoContainer />
         </div>
       </Fragment>
     );

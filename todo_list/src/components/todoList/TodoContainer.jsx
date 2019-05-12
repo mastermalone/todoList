@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { compose } from "redux";
 import TodoList from "./TodoList";
+import { reduxForm, formValueSelector } from "redux-form";
 
 import {
   HomeDuck,
@@ -8,8 +9,6 @@ import {
   updateTodoList
 } from "../../pages/home/HomeStore";
 const { todos } = HomeDuck.selectors;
-console.log("todos", todos);
-// import axios from 'axios';
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -28,11 +27,18 @@ const mapStateToProps = state => {
   };
 };
 
+const selector = formValueSelector("todo-form");
+
 const enhance = compose(
   connect(
     mapStateToProps,
     mapDispatchToProps
+    // state => selector(state, "addTodos")
   )
 );
 
-export default enhance(TodoList);
+export default reduxForm({
+  form: "todo-form"
+})(enhance(TodoList));
+
+// export default enhance(TodoList);

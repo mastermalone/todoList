@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import TodoItem from "./todoItem/TodoItem";
+import TodoHeader from "./header/Header";
 
 class TodoList extends Component {
   addTodo = title => {
@@ -14,7 +15,14 @@ class TodoList extends Component {
   render() {
     const { todoListItems } = this.props;
     console.log("todoListItems", todoListItems);
-    return <TodoItem items={todoListItems} />;
+    return (
+      <Fragment>
+        <form name="todo-form">
+          <TodoHeader />
+          <TodoItem items={todoListItems} />
+        </form>
+      </Fragment>
+    );
   }
 }
 
