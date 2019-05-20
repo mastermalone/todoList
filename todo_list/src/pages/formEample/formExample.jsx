@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Field } from "redux-form";
 import Checkbox from "../../components/checkBox/CheckBox";
 
 class FormExample extends Component {
@@ -12,7 +13,7 @@ class FormExample extends Component {
     console.log("Form Example Props", this.props);
     return (
       <form>
-        <Checkbox />
+        <Field component={Checkbox} name="check" />
       </form>
     );
   }
